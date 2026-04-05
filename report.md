@@ -1,1 +1,18 @@
+Business Use Case
+The business workflow I chose is generating a short social media caption for a fashion  product. The user is a marketer who already has a basic product description, such as color, material, and style. The system takes that product description as input and returns a short caption that can be used as a first draft for a social post. This task is worth partially automating because writing many short captions by hand is repetitive, and human is not always so creative. But the output still needs to sound polished and match the product details.
 
+Model Choice
+I chose Gemini for the final prototype because it was one of the easiest low-cost options to access from a simple Python script. My final script uses `gemini-2.5-flash`, which was fast and easy to call through a single HTTP request. During setup, I also tried an earlier Gemini model configuration, but I ran into model access and quota issues, and the API from OpenAI can not be connected for a long time, so I switched to the final Gemini setup that matched the current API behavior more reliably. 
+
+Baseline vs. Final Design
+My baseline prompt was: "Write a short, catchy social media caption for this product." This version usually produced readable output, but it was inconsistent. Some captions were too generic, and some added stylistic elements that were not clearly controlled by the prompt.
+
+In revision 1, I added length and grounding rules: the caption had to stay under 12 words, use only details from the product description, and avoid hashtags or emojis. This improved consistency and made the outputs easier to evaluate, but some captions still felt vague because the prompt did not strongly encourage the model to use the most distinctive product details.
+
+In revision 2, I made the prompt more specific about tone, length, and factual grounding. The final prompt asked for a polished fashion-brand tone, limited the output to 6 to 12 words, and told the model to reflect at least one product attribute such as color, material, or style when available. It also explicitly banned prices, emojis, hashtags, and unsupported claims, and told the model to return only the caption. Compared with the baseline, the final design produced captions that were more specific to the product description and more useful as first-pass marketing copy.
+
+Remaining Failure Cases and Human Review Needs
+This prototype is still limited. Even with a better prompt, the model can produce captions that are generic, repetitive, or too similar across products. It can also underuse important business context, such as brand voice, campaign goals, or audience segment, because the script only sees a short product description. Most importantly, human review is still needed to make sure the caption fits the brand, avoids unsupported claims, and is appropriate for the exact marketing channel. At the same time it need a clear input from human and it also take time. This is especially important when products involve regulated claims, sustainability language, or premium branding where wording matters a lot.
+
+Deployment Recommendation
+I would recommend deploying this workflow only as a first-draft assistant, not as a fully automated publishing tool. It is useful when a human marketer wants quick caption ideas and is willing to review and edit them before posting. I would not recommend direct auto-publishing without stronger controls, because the prototype does not check brand guidelines, campaign context, or factual risk beyond what the prompt can discourage. In short, this workflow is deployable for draft generation under human review, but not for fully autonomous content publishing.
