@@ -6,7 +6,7 @@ import urllib.error
 import urllib.request
 
 # Change this prompt if you want to test a different style.
-PROMPT = "Write a short, catchy social media caption for this product."
+PROMPT = "Write one short social media caption for this fashion product. Keep it between 6 and 12 words. Make it polished, stylish, and suitable for a fashion brand. Use only details from the product description, and if color, material, or style is mentioned, try to reflect at least one of those details. Do not add hashtags, emojis, prices, or unsupported claims. Return only the caption."
 
 MODEL = "gemini-2.5-flash"
 
